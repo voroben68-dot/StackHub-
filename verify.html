@@ -1,7 +1,4 @@
-
-
-
-verify_html = '''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -10,310 +7,44 @@ verify_html = '''<!DOCTYPE html>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #3b82f6;
-            --secondary: #8b5cf6;
-            --accent: #10b981;
-            --danger: #ef4444;
-            --dark: #0f172a;
-            --darker: #020617;
-            --light: #f8fafc;
-            --gray: #94a3b8;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--darker);
-            color: var(--light);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Навигация */
-        nav {
-            padding: 20px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(2, 6, 23, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-
-        .logo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            -webkit-text-fill-color: white;
-        }
-
-        /* Основной контент */
-        .container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        h1 {
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 16px;
-            text-align: center;
-            letter-spacing: -1px;
-        }
-
-        .subtitle {
-            color: var(--gray);
-            font-size: 18px;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        /* Форма проверки */
-        .verify-form {
-            width: 100%;
-            max-width: 500px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 24px;
-            padding: 40px;
-            margin-bottom: 30px;
-        }
-
-        .input-group {
-            margin-bottom: 24px;
-        }
-
-        label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 16px 20px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            color: #fff;
-            font-size: 16px;
-            font-family: 'Courier New', monospace;
-            transition: all 0.3s;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: rgba(255,255,255,0.08);
-        }
-
-        input[type="text"]::placeholder {
-            color: var(--gray);
-            opacity: 0.5;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
-        }
-
-        /* Результат проверки */
-        .result {
-            width: 100%;
-            max-width: 500px;
-            border-radius: 24px;
-            padding: 40px;
-            display: none;
-            animation: slideUp 0.4s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .result.valid {
-            display: block;
-            background: linear-gradient(145deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-
-        .result.invalid {
-            display: block;
-            background: linear-gradient(145deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-
-        .result-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            margin: 0 auto 24px;
-        }
-
-        .valid .result-icon {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--accent);
-        }
-
-        .invalid .result-icon {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--danger);
-        }
-
-        .result h2 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            text-align: center;
-        }
-
-        .result p {
-            color: var(--gray);
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        /* Данные сертификата */
-        .cert-details {
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 24px;
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .detail-row:last-child {
-            border-bottom: none;
-        }
-
-        .detail-label {
-            color: var(--gray);
-            font-size: 14px;
-        }
-
-        .detail-value {
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 12px;
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--accent);
-            border-radius: 50px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        /* QR код */
-        .qr-section {
-            text-align: center;
-            margin-top: 24px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .qr-section p {
-            margin-bottom: 16px;
-            font-size: 14px;
-        }
-
-        #qrcode {
-            display: inline-block;
-            background: #fff;
-            padding: 16px;
-            border-radius: 16px;
-        }
-
-        /* Футер */
-        footer {
-            padding: 30px;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            color: var(--gray);
-            font-size: 14px;
-        }
-
-        footer a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        /* Адаптивность */
-        @media (max-width: 600px) {
-            h1 { font-size: 32px; }
-            .verify-form { padding: 24px; }
-            .result { padding: 24px; }
-            nav { padding: 15px 20px; }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #3b82f6; --secondary: #8b5cf6; --accent: #10b981; --danger: #ef4444; --dark: #0f172a; --darker: #020617; --light: #f8fafc; --gray: #94a3b8; }
+        body { font-family: 'Inter', sans-serif; background: var(--darker); color: var(--light); min-height: 100vh; display: flex; flex-direction: column; }
+        nav { padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .logo { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; -webkit-text-fill-color: white; }
+        .container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; max-width: 800px; margin: 0 auto; width: 100%; }
+        h1 { font-size: 42px; font-weight: 800; margin-bottom: 16px; text-align: center; letter-spacing: -1px; }
+        .subtitle { color: var(--gray); font-size: 18px; margin-bottom: 40px; text-align: center; }
+        .verify-form { width: 100%; max-width: 500px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 40px; margin-bottom: 30px; }
+        .input-group { margin-bottom: 24px; }
+        label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
+        input[type="text"] { width: 100%; padding: 16px 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: #fff; font-size: 16px; font-family: 'Courier New', monospace; transition: all 0.3s; }
+        input[type="text"]:focus { outline: none; border-color: var(--primary); background: rgba(255,255,255,0.08); }
+        input[type="text"]::placeholder { color: var(--gray); opacity: 0.5; }
+        .btn { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; border: none; border-radius: 12px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4); }
+        .result { width: 100%; max-width: 500px; border-radius: 24px; padding: 40px; display: none; animation: slideUp 0.4s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .result.valid { display: block; background: linear-gradient(145deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .result.invalid { display: block; background: linear-gradient(145deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%); border: 1px solid rgba(239, 68, 68, 0.3); }
+        .result-icon { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 24px; }
+        .valid .result-icon { background: rgba(16, 185, 129, 0.2); color: var(--accent); }
+        .invalid .result-icon { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+        .result h2 { font-size: 24px; font-weight: 700; margin-bottom: 8px; text-align: center; }
+        .result p { color: var(--gray); text-align: center; margin-bottom: 30px; }
+        .cert-details { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 24px; margin-bottom: 24px; }
+        .detail-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .detail-row:last-child { border-bottom: none; }
+        .detail-label { color: var(--gray); font-size: 14px; }
+        .detail-value { color: #fff; font-weight: 600; font-size: 14px; }
+        .status-badge { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-weight: 600; }
+        .qr-section { text-align: center; margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .qr-section p { margin-bottom: 16px; font-size: 14px; }
+        #qrcode { display: inline-block; background: #fff; padding: 16px; border-radius: 16px; }
+        footer { padding: 30px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); color: var(--gray); font-size: 14px; }
+        footer a { color: var(--primary); text-decoration: none; }
+        @media (max-width: 600px) { h1 { font-size: 32px; } .verify-form { padding: 24px; } .result { padding: 24px; } nav { padding: 15px 20px; } }
     </style>
 </head>
 <body>
@@ -336,7 +67,6 @@ verify_html = '''<!DOCTYPE html>
             <button class="btn" onclick="verifyCertificate()">Проверить</button>
         </div>
 
-        <!-- Результат: Валидный -->
         <div class="result valid" id="result-valid">
             <div class="result-icon">✓</div>
             <h2>Сертификат подтверждён</h2>
@@ -377,7 +107,6 @@ verify_html = '''<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- Результат: Невалидный -->
         <div class="result invalid" id="result-invalid">
             <div class="result-icon">✕</div>
             <h2>Сертификат не найден</h2>
@@ -390,124 +119,59 @@ verify_html = '''<!DOCTYPE html>
     </footer>
 
     <script>
-        // База данных сертификатов (в реальном проекте это должен быть сервер)
         const certificatesDB = {
-            'FSJS-2026-048-NV': {
-                course: 'Full-Stack JavaScript',
-                student: 'Воробьев Никита',
-                date: '05.04.2026',
-                hours: '48 часов',
-                instructor: 'Alex Chen'
-            },
-            'PYDS-2026-064-AP': {
-                course: 'Python Data Science',
-                student: 'Александр Петров',
-                date: '05.04.2026',
-                hours: '64 часа',
-                instructor: 'Sarah Johnson'
-            },
-            'REAC-2026-036-MS': {
-                course: 'React Advanced',
-                student: 'Мария Сидорова',
-                date: '05.04.2026',
-                hours: '36 часов',
-                instructor: 'Michael Ross'
-            },
-            'DEVO-2026-040-DI': {
-                course: 'DevOps Basics',
-                student: 'Дмитрий Иванов',
-                date: '05.04.2026',
-                hours: '40 часов',
-                instructor: 'David Kim'
-            },
-            'MOBI-2026-042-EK': {
-                course: 'React Native',
-                student: 'Елена Козлова',
-                date: '05.04.2026',
-                hours: '42 часа',
-                instructor: 'Anna Lee'
-            },
-            'BLOC-2026-056-IN': {
-                course: 'Blockchain Development',
-                student: 'Игорь Новиков',
-                date: '05.04.2026',
-                hours: '56 часов',
-                instructor: 'Chris Wilson'
-            }
+            'FSJS-2026-048-NV': { course: 'Full-Stack JavaScript', student: 'Воробьев Никита', date: '05.04.2026', hours: '48 часов' },
+            'PYDS-2026-064-AP': { course: 'Python Data Science', student: 'Александр Петров', date: '05.04.2026', hours: '64 часа' },
+            'REAC-2026-036-MS': { course: 'React Advanced', student: 'Мария Сидорова', date: '05.04.2026', hours: '36 часов' },
+            'DEVO-2026-040-DI': { course: 'DevOps Basics', student: 'Дмитрий Иванов', date: '05.04.2026', hours: '40 часов' },
+            'MOBI-2026-042-EK': { course: 'React Native', student: 'Елена Козлова', date: '05.04.2026', hours: '42 часа' },
+            'BLOC-2026-056-IN': { course: 'Blockchain Development', student: 'Игорь Новиков', date: '05.04.2026', hours: '56 часов' }
         };
 
         function verifyCertificate() {
             const input = document.getElementById('cert-id');
             const certId = input.value.trim().toUpperCase();
             
-            // Скрываем все результаты
             document.getElementById('result-valid').style.display = 'none';
             document.getElementById('result-invalid').style.display = 'none';
             
-            if (!certId) {
-                alert('Введите ID сертификата');
-                return;
-            }
+            if (!certId) { alert('Введите ID сертификата'); return; }
             
             const cert = certificatesDB[certId];
             
             if (cert) {
-                // Показываем валидный результат
                 document.getElementById('detail-course').textContent = cert.course;
                 document.getElementById('detail-student').textContent = cert.student;
                 document.getElementById('detail-id').textContent = certId;
                 document.getElementById('detail-date').textContent = cert.date;
                 document.getElementById('detail-hours').textContent = cert.hours;
                 
-                // Генерируем QR-код
                 const qrContainer = document.getElementById('qrcode');
                 qrContainer.innerHTML = '';
                 
-                const qrData = JSON.stringify({
-                    platform: 'StackHub',
-                    course: cert.course,
-                    student: cert.student,
-                    id: certId,
-                    date: cert.date,
-                    verified: true,
-                    url: window.location.href
-                });
-                
                 new QRCode(qrContainer, {
-                    text: qrData,
-                    width: 150,
-                    height: 150,
-                    colorDark: '#0f172a',
-                    colorLight: '#ffffff',
-                    correctLevel: QRCode.CorrectLevel.H
+                    text: JSON.stringify({ platform: 'StackHub', course: cert.course, student: cert.student, id: certId, date: cert.date, verified: true }),
+                    width: 150, height: 150, colorDark: '#0f172a', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H
                 });
                 
                 document.getElementById('result-valid').style.display = 'block';
                 document.getElementById('result-valid').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } else {
-                // Показываем невалидный результат
                 document.getElementById('result-invalid').style.display = 'block';
                 document.getElementById('result-invalid').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         }
 
-        // Проверка по Enter
-        document.getElementById('cert-id').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                verifyCertificate();
-            }
-        });
-
-        // Автопроверка если в URL есть параметр
+        document.getElementById('cert-id').addEventListener('keypress', function(e) { if (e.key === 'Enter') verifyCertificate(); });
+        
         window.addEventListener('load', function() {
             const urlParams = new URLSearchParams(window.location.search);
             const certId = urlParams.get('id');
-            if (certId) {
-                document.getElementById('cert-id').value = certId;
-                verifyCertificate();
-            }
+            if (certId) { document.getElementById('cert-id').value = certId; verifyCertificate(); }
         });
     </script>
 </body>
-</html>'''
+</html>
+
+
 
